@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Josh\'s Applications</string>
+    <string name="new_todo">New Todo</string>
+    <string name="clear">Clear</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="add_todo">Add Todo</string>
+    <string name="todo_empty_error">Todo cannot be empty</string>
 </resources>
