@@ -18,6 +18,7 @@ class TodoViewModel : ViewModel() {
         }
     }
 
+
     private fun generateId(): String {
         return _todos.value.size.toString()
     }
