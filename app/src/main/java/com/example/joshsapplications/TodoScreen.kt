@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -13,15 +14,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoScreen(todoViewModel: TodoViewModel = viewModel()) {
     val todos by todoViewModel.todos.collectAsState()
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(BottomSheetValue.Collapsed)
-    val (todoText, setTodoText) = remember { mutableStateOf("") }
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+
+    var todoText by remember { mutableStateOf("") }
 
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
@@ -33,7 +35,7 @@ fun TodoScreen(todoViewModel: TodoViewModel = viewModel()) {
             ) {
                 OutlinedTextField(
                     value = todoText,
-                    onValueChange = setTodoText,
+                    onValueChange = { todoText = it },
                     label = { Text("New Todo") },
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -42,11 +44,11 @@ fun TodoScreen(todoViewModel: TodoViewModel = viewModel()) {
                     onClick = {
                         if (todoText.isNotBlank()) {
                             todoViewModel.addTodo(todoText)
-                            setTodoText("")
+                            todoText = ""
                             scope.launch { bottomSheetScaffoldState.bottomSheetState.collapse() }
                         } else {
                             scope.launch {
-                                //scaffoldState.snackbarHostState.showSnackbar("Todo cannot be empty")
+                                scaffoldState.snackbarHostState.showSnackbar("Todo cannot be empty")
                             }
                         }
                     },
@@ -64,41 +66,5 @@ fun TodoScreen(todoViewModel: TodoViewModel = viewModel()) {
                 }
             }
         },
-        sheetPeekHeight = 0.dp,
-        content = {
-            Scaffold(
-                scaffoldState = scaffoldState,
-                topBar = {
-                    TopAppBar(title = { Text("Todo") })
-                },
-                floatingActionButton = {
-                    FloatingActionButton(onClick = { scope.launch { bottomSheetScaffoldState.bottomSheetState.expand() } }) {
-                        Icon(Icons.Default.Add, contentDescription = "Add Todo")
-                    }
-                },
-                content = {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        LazyColumn {
-                            items(todos) { todo ->
-                                TodoItem(
-                                    todo = todo,
-                                    onCheckedChange = { todoViewModel.toggleTodo(todo) }
-                                )
-                            }
-                        }
-                    }
-                }
-            )
-        }
-    )
-
 
 }
-
-
-fun rememberScaffoldState() {
-
-}
-
-
-*/
