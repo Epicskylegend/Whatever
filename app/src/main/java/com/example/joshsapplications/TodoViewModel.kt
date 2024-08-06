@@ -22,6 +22,7 @@ class TodoViewModel : ViewModel() {
             if (it == todo) it.copy(isCompleted = !it.isCompleted) else it
         }
     }
+
 }
 
 /* package com.example.joshsapplications

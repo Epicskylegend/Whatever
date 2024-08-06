@@ -24,6 +24,7 @@ fun TodoItem(todo: Todo, onCheckedChange: (Boolean) -> Unit) {
             onCheckedChange = { isChecked -> onCheckedChange(isChecked) }
         )
     }
+
 }
 
 
