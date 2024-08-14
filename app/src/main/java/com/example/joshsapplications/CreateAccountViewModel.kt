@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class CreateAccountViewModel : ViewModel() {
+class CreateAccountViewModel(mockApiService: ApiService) : ViewModel() {
 
     private val _createAccountState = MutableStateFlow<CreateAccountState>(CreateAccountState.Idle)
     val createAccountState: StateFlow<CreateAccountState> get() = _createAccountState
