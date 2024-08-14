@@ -66,29 +66,5 @@ fun TodoScreen(todoViewModel: TodoViewModel = viewModel()) {
                 }
             }
         },
-        sheetPeekHeight = 0.dp
-    ) {
-        Scaffold(
-            scaffoldState = scaffoldState,
-            topBar = {
-                TopAppBar(title = { Text("Todo") })
-            },
-            floatingActionButton = {
-                FloatingActionButton(onClick = { scope.launch { bottomSheetScaffoldState.bottomSheetState.expand() } }) {
-                    Icon(Icons.Default.Add, contentDescription = "Add Todo")
-                }
-            }
-        ) { paddingValues ->
-            Column(modifier = Modifier.padding(paddingValues)) {
-                LazyColumn {
-                    items(todos) { todo ->
-                        TodoItem(
-                            todo = todo,
-                            onCheckedChange = { todoViewModel.toggleTodo(todo) }
-                        )
-                    }
-                }
-            }
-        }
-    }
+
 }
